@@ -1,0 +1,11 @@
+*.pyc
+*~
+*.diff
+.project
+.pydevproject
+ec2_api.egg-info
+.tox
+.testrepository
+/functional_tests.conf*
+/buckets
+.venv
