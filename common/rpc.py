@@ -58,6 +58,13 @@ def init(conf):
     NOTIFIER = oslo_messaging.Notifier(TRANSPORT, serializer=serializer)
 
 
+def get_transport():
+    global TRANSPORT
+    if TRANSPORT:
+        return TRANSPORT
+    return oslo_messaging.get_transport(cfg.CONF)
+
+
 def cleanup():
     global TRANSPORT, NOTIFIER
     assert TRANSPORT is not None

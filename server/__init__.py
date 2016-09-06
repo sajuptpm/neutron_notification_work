@@ -33,6 +33,7 @@ LOG = logging.getLogger(__name__)
 
 def main():
     # the configuration will be read into the cfg.CONF global data structure
+    ##SM:initialize rpc transport
     config.init(sys.argv[1:])
     if not cfg.CONF.config_file:
         sys.exit(_("ERROR: Unable to find configuration file via the default"
@@ -56,7 +57,16 @@ def main():
             rpc_thread.link(lambda gt: api_thread.kill())
             api_thread.link(lambda gt: rpc_thread.kill())
 
+        try:
+            print "===main===start==service.serve_notification_rpc=========="
+            neutron_notification_rpc = service.serve_notification_rpc()
+            print "===main===end==service.serve_notification_rpc=========="
+        except Exception as ex:
+            print "===main===failed==service.serve_notification_rpc=========="
+            raise ex
+
         pool.waitall()
+        print "===main===after====pool.waitall()=========="
     except KeyboardInterrupt:
         pass
     except RuntimeError as e:

@@ -33,6 +33,9 @@ from neutron import manager
 from neutron.openstack.common import loopingcall
 from neutron.openstack.common import service as common_service
 from neutron import wsgi
+from neutron.common import topics
+from neutron.api.rpc.handlers import nova_notification_rpc
+import oslo_messaging
 
 
 service_opts = [
@@ -163,6 +166,25 @@ def serve_rpc():
         with excutils.save_and_reraise_exception():
             LOG.exception(_LE('Unrecoverable error: please check log for '
                               'details.'))
+
+
+def serve_notification_rpc():
+    print "====starting serve_notification_rpc===="
+    #import pdb; pdb.set_trace()
+    transport = n_rpc.get_transport()
+    targets = [oslo_messaging.Target(topic=topics.NOVA_NOTIFIER, exchange=None)]
+    endpoints = [nova_notification_rpc.EventsNotificationEndpoint()]
+    listener = oslo_messaging.get_notification_listener(
+        transport,
+        targets,
+        endpoints,
+        pool=topics.NOVA_NOTIFIER)
+    ##SM: pool means queue name
+    print "====listener.start()===="
+    listener.start()
+    print "====started serve_notification_rpc===="
+    listener.wait()
+    print "====waiting serve_notification_rpc===="
 
 
 def _run_wsgi(app_name):

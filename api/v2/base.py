@@ -382,10 +382,13 @@ class Controller(object):
 
     def create(self, request, body=None, **kwargs):
         """Creates a new instance of the requested entity."""
+        #import pdb; pdb.set_trace()
         parent_id = kwargs.get(self._parent_id_name)
+        print "====create====,before===self._notifier.info==="
         self._notifier.info(request.context,
                             self._resource + '.create.start',
                             body)
+        print "====create====,after===self._notifier.info==="
         body = Controller.prepare_request_body(request.context, body, True,
                                                self._resource, self._attr_info,
                                                allow_bulk=self._allow_bulk)

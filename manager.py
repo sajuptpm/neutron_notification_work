@@ -126,6 +126,7 @@ class NeutronManager(object):
         # the rest of service plugins
         self.service_plugins = {constants.CORE: self.plugin}
         self._load_service_plugins()
+        #import pdb; pdb.set_trace()
 
     def _get_plugin_instance(self, namespace, plugin_provider):
         try:

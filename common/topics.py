@@ -36,6 +36,7 @@ L3_AGENT = 'l3_agent'
 DHCP_AGENT = 'dhcp_agent'
 METERING_AGENT = 'metering_agent'
 LOADBALANCER_AGENT = 'n-lbaas_agent'
+NOVA_NOTIFIER = 'notifications.info'
 
 
 def get_topic_name(prefix, table, operation, host=None):
