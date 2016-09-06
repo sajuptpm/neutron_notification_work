@@ -178,6 +178,9 @@ def serve_notification_rpc():
         transport,
         targets,
         endpoints,
+        serializer=None,
+        executor='blocking',
+        allow_requeue=True,
         pool=topics.NOVA_NOTIFIER)
     ##SM: pool means queue name
     print "====listener.start()===="
